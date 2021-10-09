@@ -2,8 +2,9 @@ function foo = blend(f1,f2,location,distance)
 % BLEND  Uses hyperbolic tangent (tanh) to smoothly blend two functions or
 % smoothly combine a piecewise function into a single function handle.
 % 
-%   F = BLEND(f1,f2,LOC,DIST) returns function handle foo which, when evaluated,
-%   will return a smooth blend between functions provided in handles f1 and f2.
+%   foo = BLEND(f1,f2,LOC,DIST) returns function handle foo which, when
+%   evaluated, will return a smooth blend between functions provided in handles
+%   f1 and f2.
 % 
 %   The blend is centered around LOC, and most of the smooth blend happens in
 %   the region LOC +/- DIST such that F will have value ca. 0.88*f1(x) + 0.12*f2
@@ -29,9 +30,9 @@ function foo = blend(f1,f2,location,distance)
 %     foo = blend(f1, f2, 1, dist);
 %     plot(x, foo(x))
 % 
-%   See also tanh.
+%   See also tanh, piecewise.
 % 
-%   F = BLEND(f1,f2,LOC,DIST)
+%   foo = BLEND(f1,f2,LOC,DIST)
 
 % Copyright 2016 Sky Sartorius
 % Contact: www.mathworks.com/matlabcentral/fileexchange/authors/101715
@@ -60,13 +61,3 @@ end
 blf = @(x) tanh((x-location)./distance)/2;
 
 foo = @(x) (1/2 - blf(x)).*f1(x) + (1/2 + blf(x)).*f2(x);
-
-% Revision History
-%{
-2016-04-12 Created.
-2016-04-20 
--Added numeric f1 and f2. Creation of function handles may be slower,
-but the code is much cleaner than having several versions of the foo = line.
--Simplified and better vectorized based on 1/0 evaluating to inf.
--Input checking.
-%}
